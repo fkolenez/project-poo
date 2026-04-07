@@ -1,7 +1,7 @@
-public class Entregador extends Users {
+public class DeliveryPerson extends Users {
     public boolean available;
 
-    public Entregador(int id, String username, String cpf, String email, String password, String phone, String userType, Boolean available) {
+    public DeliveryPerson(int id, String username, String cpf, String email, String password, String phone, String userType, boolean available) {
         super(id, username, cpf, email, password, phone, userType);
         this.available = available;
     }
