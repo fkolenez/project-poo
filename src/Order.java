@@ -14,6 +14,10 @@ public class Order {
         this.client = client;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void addItem(OrderItems item) {
         items.add(item);
     }
