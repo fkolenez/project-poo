@@ -3,7 +3,6 @@ public class CardPayment implements Payment{
         System.out.println("Pagamento via cartão aprovado!");
         return true;
     }
-
     public String getPayment() {
         return "Cartão";
     }

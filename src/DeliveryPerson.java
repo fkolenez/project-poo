@@ -6,6 +6,14 @@ public class DeliveryPerson extends Users {
         this.available = available;
     }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
     @Override
     public String toString(){
         return super.toString()+", available = "+(available ? "Sim" : "Não");

@@ -22,6 +22,34 @@ public class Order {
         items.add(item);
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public DeliveryPerson getDeliveryPerson() {
+        return deliveryPerson;
+    }
+
+    public void setDeliveryPerson(DeliveryPerson deliveryPerson) {
+        this.deliveryPerson = deliveryPerson;
+    }
+
+    public List<OrderItems> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItems> items) {
+        this.items = items;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public double calculateTotal(){
         double total = 0;
         for(OrderItems item : items) {
