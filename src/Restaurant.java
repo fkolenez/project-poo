@@ -13,8 +13,26 @@ public class Restaurant {
         this.address = address;
     }
 
-    public void  addProduct(Product product){
+    public void addProduct(Product product) {
         productList.add(product);
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void listProducts() {
+        if(productList.isEmpty()) {
+            System.out.println("Não há produtos cadastrados!");
+            return;
+        } else {
+            System.out.println("-*-*-*- CARDÁPIO DO RESTAURANTE "+name.toUpperCase()+" -*-*-*-");
+
+            for (int i = 0; i < productList.size(); i++) {
+                Product product = productList.get(i);
+                System.out.println((i+1)+" - "+product);
+            }
+        }
     }
 
     public int getId() {
@@ -43,9 +61,5 @@ public class Restaurant {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
-    }
-
-    public List<Product> getProductList() {
-        return productList;
     }
 }

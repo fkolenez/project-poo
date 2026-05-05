@@ -4,7 +4,7 @@ public class OrderItems {
     protected int qty;
     protected double unitPrice;
 
-    public OrderItems(int id, Product product, int qty, double unitPrice) {
+    public OrderItems(int id, Product product, int qty) {
         this.id = id;
         this.product = product;
         this.qty = qty;
