@@ -10,6 +10,10 @@ public class DeliveryPerson extends Users {
         return available;
     }
 
+    public String getName() {
+        return super.getUsername();
+    }
+
     public void setAvailable(boolean available) {
         this.available = available;
     }

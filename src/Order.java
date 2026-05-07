@@ -20,7 +20,7 @@ public class Order {
     public Order(int id, Client client) {
         this.id = id;
         this.client = client;
-        this.status = "EM ABERTO";
+        this.status = "OPEN";
     }
 
     public int getId() {
@@ -40,16 +40,16 @@ public class Order {
     }
 
     public void addItem(Product product, int qty) {
-        if(!status.equals("EM ABERTO")) {
+        if(!status.equals("OPEN")) {
             System.out.println("Não é possível incluir itens em um pedido que não está aberto!");
         } else {
-            int orderId = 1;
+            int productOrderId = 1;
 
             if(!items.isEmpty()) {
-                orderId = items.size()+1;
+                productOrderId = items.size()+1;
             }
 
-            OrderItems item = new OrderItems(orderId, product, qty);
+            OrderItems item = new OrderItems(productOrderId, product, qty);
             items.add(item);
 
             System.out.println("Item "+product.getName()+" adicionando com Sucesso!");
@@ -87,6 +87,45 @@ public class Order {
         }
 
         return total;
+    }
+
+    public void removeItem(String productName) {
+        if(!status.equals("OPEN")) {
+            System.out.println("coe paizao ta tirano coisa que nao pode");
+        } else {
+            boolean removed = items.removeIf(
+                    item -> item.getProduct().getName().equalsIgnoreCase(productName)
+            );
+
+            if(removed) {
+                System.out.println("Item "+productName+" removido com sucesso!");
+            } else {
+                System.out.println("Item "+productName+" não encontrado!");
+            }
+        }
+    }
+
+    public void definePayment(Payment payment) {
+        this.payment = payment;
+        System.out.println("Pagamento recebido!"+payment.getPayment());
+    }
+
+    public void defineDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        System.out.println("Entrega definida como: "+ delivery.getClass().getSimpleName());
+    }
+
+    public void defineDeliveryPerson(DeliveryPerson deliveryPerson) {
+        this.deliveryPerson = deliveryPerson;
+        System.out.println("Entregador definido como" + deliveryPerson.getName());
+    }
+
+    public String dontEvenGetDownAndAlredyRaisedUp(){
+       return "bruna voce ja parou pra pensar";
+    }
+
+    public String giggles(){
+        return "haha";
     }
 
     public void  finalizeOrder() {
