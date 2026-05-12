@@ -1,3 +1,4 @@
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,6 +81,77 @@ public class Order {
         this.client = client;
     }
 
+    public void startDelivery() {
+        if(!status.equals("CONFIRMED")) {
+            System.out.println("O pedido precsar estar confirmado antes de ser enviado!");
+            return;
+        }
+
+        if(deliveryPerson == null) {
+            System.out.println("Não foi definido entregador!");
+            return;
+        }
+
+        if(delivery == null) {
+            System.out.println("Não foi definida a entrega!");
+        }
+
+        status = "OUT TO DELIVERY";
+        System.out.println("O pedido saiu para entrega!");
+    }
+
+    public void finishDelivery() {
+        double total = calculateTotal();
+
+        if(!status.equals("OUT TO DELIVERY")) {
+            System.out.println("O pedido não saiu para entrega para ser finalizado! PRA CIMA DE MOA? "+giggles());
+            return;
+        }
+
+        if(payment == null) {
+            System.out.println("Forma de pagamento não informada!");
+            return;
+        }
+
+        System.out.println("*-*-*-*-* Finalizando pedido! *-*-*-*-*");
+        payment.isPayed(total);
+
+        status = "COMPLETED";
+
+        /* Polimorfismo da classe abstrata! */
+        delivery.startDelivery();
+        delivery.performDelivery();
+
+        System.out.println("Pedido finalizado com sucessexo");
+    }
+
+    public void resumeOrder() {
+        System.out.println("\n *-*-*-*-* Resumo do pedido *-*-*-*-*\n");
+        System.out.println("Pedido #"+id);
+        System.out.println("Cliente: "+client.getUsername());
+        System.out.println("Endereço: "+client.getStreet());
+        System.out.println("Status do pedido: "+status);
+
+        System.out.println("Itens do pedido: ");
+        for(OrderItems item : items) {
+            System.out.println("- "+item);
+        }
+
+        System.out.println("Preço: "+String.format("%.2f", calculateTotal()));
+
+        if(payment != null) {
+            System.out.println("Pagamento: "+payment.getPayment());
+        }
+
+        if(deliveryPerson != null) {
+            System.out.println("Entregador: "+deliveryPerson.getName());
+        }
+
+        if(delivery != null) {
+            System.out.println("Entrega: "+ delivery.getClass().getSimpleName());
+        }
+    }
+
     public double calculateTotal(){
         double total = 0;
         for(OrderItems item : items) {
@@ -87,6 +159,29 @@ public class Order {
         }
 
         return total;
+    }
+
+    public void confirmOrder() {
+        /* Pedido não está em aberto */
+        if(!status.equals("OPEN")) {
+            System.out.println("O pedido não pode ser confirmado pois não está em aberto!");
+        } else {
+            /* nn tem cliente no bagulho */
+            if(client == null) {
+                System.out.println("Cliente inválido ou não informado!");
+            }
+
+            if(items.isEmpty()) {
+                System.out.println("Adicione itens para confirmar o pdiddy");
+            }
+
+            for(OrderItems item : items) {
+                item.getProduct().reduceStock(item.qty);
+            }
+
+            status = "CONFIRMED";
+            System.out.println("Pedido confirmado");
+        }
     }
 
     public void removeItem(String productName) {
@@ -120,12 +215,12 @@ public class Order {
         System.out.println("Entregador definido como" + deliveryPerson.getName());
     }
 
-    public String dontEvenGetDownAndAlredyRaisedUp(){
+    public String dontEvenGetDownAndAlreadyRaisedUp() {
        return "bruna voce ja parou pra pensar";
     }
 
     public String giggles(){
-        return "haha";
+        return "HAHAHA né";
     }
 
     public void  finalizeOrder() {
